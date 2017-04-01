@@ -25,7 +25,7 @@ function sayNotificationsCount(request, response){
     response.say('You need to link Pivotal Tracker first')
     response.linkAccount()
   } else {
-    return pivotal.getNotifications({
+    return pivotal.getUnreadNotifications({
       token: accessToken,
     }).then(notifications => {
       response.card(getNotificationsCountCard(notifications.length))
