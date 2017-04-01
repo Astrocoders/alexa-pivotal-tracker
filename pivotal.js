@@ -8,7 +8,16 @@ const api = {
         'X-TrackerToken': token,
       },
     }).then(response => response.json())
-  }
+  },
+
+  getUnreadNotications({ token }){
+    return this.getNotifications({ token })
+      .then(({ data: notifications }) => notifications.filter(isUnreadNotification))
+  },
+}
+
+function isUnreadNotification(notification){
+  return Boolean(notification.read_at) === false
 }
 
 module.exports = api
