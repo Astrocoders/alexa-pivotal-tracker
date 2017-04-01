@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Pivotal token</title>
+    <style>
+      body, html {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+      .form-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-wrapper">
+      <form action="https://pitangui.amazon.com/spa/skill/account-linking-status.html" type="GET">
+        <label for="access_token">Inform your Pivotal's Token</label>
+        <input type="text" name="access_token" placeholder="Token"/>
+      </form>
+    </div>
+    <script>
+      const authState = window.location.search.match(/state\=[^&]+/g)[0].split('=')[1]
+
+      document.querySelector('form').addEventListener('submit', event => {
+        event.preventDefault()
+        const token = document.querySelector('input[name=access_token]').value
+
+        location = `https://pitangui.amazon.com/spa/skill/account-linking-status.html?vendorId=M1YK1VSO8VZC1Y#state=${authState}&token_type=Bearer&access_token=${token}`
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "alexa-pivotal-tracker",
+  "version": "1.0.0",
+  "description": "Alexa Skill for PV",
+  "main": "index.js",
+  "author": "Gabriel Rubens",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index",
+    "dev": "PORT=3000 npm start",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "alexa-app": "^3.2.0",
+    "express": "^4.15.2",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.0",
+    "node-fetch": "^1.6.3",
+    "now-logs": "^0.0.7"
+  },
+  "devDependencies": {
+    "jest": "^19.0.2"
+  }
+}
