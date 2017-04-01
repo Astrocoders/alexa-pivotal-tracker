@@ -12,7 +12,7 @@ const api = {
 
   getUnreadNotications({ token }){
     return api.getNotifications({ token })
-      .then(response => response.data.notifications.filter(isUnreadNotification))
+      .then(({data: notifications}) => notifications.filter(isUnreadNotification))
   },
 }
 
