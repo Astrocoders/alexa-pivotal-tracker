@@ -11,7 +11,7 @@ const api = {
   },
 
   getUnreadNotications({ token }){
-    return this.getNotifications({ token })
+    return api.getNotifications({ token })
       .then(response) => response.data.notifications.filter(isUnreadNotification))
   },
 }
