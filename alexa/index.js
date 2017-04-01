@@ -21,7 +21,8 @@ function sayNotificationsCount(request, response){
   const accessToken = request.sessionDetails.accessToken
 
   if(!accessToken){
-    response.say('You must link your Pivotal Tracker via the Alexa app before')
+    response.say('You need to link Pivotal Tracker first')
+    response.linkAccount()
   } else {
     return pivotal.getNotifications({
       token: accessToken,

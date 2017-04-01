@@ -15,6 +15,12 @@ alexaApp.intent('ReadLatestNotifications', {
 }, (request, response) => {
   const accessToken = request.sessionDetails.accessToken
 
+  if(!accessToken){
+    response.say('You need to link Pivotal Tracker first')
+    response.linkAccount()
+    return
+  }
+
   return pivotal.getNotifications({
     token: accessToken,
   }).then(notifications => {
@@ -22,7 +28,9 @@ alexaApp.intent('ReadLatestNotifications', {
 
     if(unreadOnes.length === 0){
       response.say('You don\'t have any new notifications for now')
+      response.card('Pivotal Tracker', `You don't have any new notifications. Well done!`)
     } else {
+      response.card('Pivotal Tracker', `You have ${unreadOnes.length} new notifications`)
       const lastNotifications = take(request.slot('COUNT') || 1, unreadOnes)
       lastNotifications.forEach(notification => {
         response.say(notificationToSayText(notification))
