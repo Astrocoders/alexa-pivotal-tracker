@@ -1,5 +1,3 @@
-require('now-logs')('pivotal-W9qnKevQvprcizWL3-4')
-
 const express = require('express')
 const server = express()
 const alexa = require('./alexa')
