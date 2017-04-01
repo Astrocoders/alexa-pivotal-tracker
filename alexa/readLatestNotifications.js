@@ -2,6 +2,7 @@ const alexaApp = require('./app')
 const moment = require('moment')
 const { take } = require('lodash/fp')
 const pivotal = require('../pivotal')
+const getNotificationsCountCard = require('./utils/getNotificationsCountCard')
 const notificationToSayText = require('./utils/notificationToSayText')
 
 alexaApp.intent('ReadLatestNotifications', {
@@ -21,21 +22,15 @@ alexaApp.intent('ReadLatestNotifications', {
     return
   }
 
-  return pivotal.getNotifications({
+  return pivotal.getUnreadNotifications({
     token: accessToken,
   }).then(notifications => {
-    const unreadOnes = notifications.data.filter(notification => !notification.read_at)
+    response.card(getNotificationsCountCard(notifications.length))
 
-    if(unreadOnes.length === 0){
+    if(notifications.length === 0){
       response.say('You don\'t have any new notifications for now')
-      response.card({
-        type: 'Simple',
-        title: 'Pivotal Tracker',
-        content: `You don't have any new notifications. Well done!`,
-      })
     } else {
-      response.card('Pivotal Tracker', `You have ${unreadOnes.length} new notifications`)
-      const lastNotifications = take(request.slot('COUNT') || 1, unreadOnes)
+      const lastNotifications = take(request.slot('COUNT') || 1, notifications)
       lastNotifications.forEach(notification => {
         response.say(notificationToSayText(notification))
       })
