@@ -1,5 +1,6 @@
 const alexaApp = require('./app')
 const pivotal = require('../pivotal') 
+const pluralize = require('pluralize')
 const getNotificationsCountCard = require('./utils/getNotificationsCountCard')
 
 require('./readLatestNotifications')
@@ -28,8 +29,9 @@ function sayNotificationsCount(request, response){
     return pivotal.getUnreadNotifications({
       token: accessToken,
     }).then(notifications => {
-      response.card(getNotificationsCountCard(notifications.length))
-      response.say(`You have ${notifications.length} new notifications`)
+      const count = notifications.length
+      response.card(getNotificationsCountCard(count))
+      response.say(`You have ${count} new ${pluralize('notification', count)}`)
     })
   }
 }
